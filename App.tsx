@@ -1,20 +1,33 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { MainScreen } from './screens/MainScreen';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import MangaDetails from './screens/MangaDetails';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import ChapterReader from './components/ChapterReader';
+
+const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+const MainScreenStack = () => (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='MainScreen' component={MainScreen} />
+        <Stack.Screen name='MangaDetails' component={MangaDetails} />
+        <Stack.Screen name='ChapterReader' component={ChapterReader} />
+    </Stack.Navigator>
+);
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+    return (
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{ headerShown: false }}>
+                <Stack.Screen name='MainScreen' component={MainScreen} />
+                <Stack.Screen name='MangaDetails' component={MangaDetails} />
+                <Stack.Screen name='ChapterReader' component={ChapterReader} />
+            </Stack.Navigator>
+            {/* <Tab.Navigator screenOptions={{ headerShown: false }}>
+                <Tab.Screen name='Home' component={MainScreenStack} />
+            </Tab.Navigator> */}
+        </NavigationContainer>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
