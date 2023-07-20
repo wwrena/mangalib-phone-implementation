@@ -2,14 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, TextInput, View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { AppTheme } from '../styles/AppTheme';
 import { ITitle } from '../types/ITitle';
-import { ResultCard } from '../styles/ResultCard';
 import { ListView } from '../styles/ListView';
 import { useNavigation } from '@react-navigation/native';
 
 export const MainScreen: React.FC = () => {
     const navigation: any = useNavigation();
 
-    const [search, setSearch] = useState<string>('кагуя');
+    const [search, setSearch] = useState<string>('');
     const [result, setResult] = useState<ITitle[] | null>(null);
     const [pending, setPending] = useState<Boolean>(false);
 
@@ -59,16 +58,6 @@ export const MainScreen: React.FC = () => {
                 {result && pending == false ? (
                     <ScrollView>
                         <View style={AppTheme.resultList}>
-                            {/* {result.map((item: ITitle) => {
-                                return (
-                                    <TouchableOpacity style={ResultCard.card}>
-                                        <View>
-                                            <Image source={{ uri: item.coverImage }} style={ResultCard.image} />
-                                            <Text style={{ color: 'white', fontWeight: '600' }}>{item.name}</Text>
-                                        </View>
-                                    </TouchableOpacity>
-                                );
-                            })} */}
                             {result.map((item: ITitle, index: number) => {
                                 return (
                                     <TouchableOpacity

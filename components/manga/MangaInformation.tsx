@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Text, ActivityIndicator, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
 import { AppTheme } from '../../styles/AppTheme';
 import { ITitle } from '../../types/ITitle';
 import SafeView from '../childs/SafeView';
@@ -10,6 +10,7 @@ import Separator from '../Separator';
 import { clearSpaces } from '../../utils/ClearSpaces';
 import Related from './Related';
 import Heading from '../Text/Heading';
+import TeamCard from './TeamCard';
 
 type Props = {
     details: ITitle;
@@ -80,32 +81,7 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                             <Heading>Переводчики</Heading>
                             <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                                 {teams.map((team: ITeams) => {
-                                    return (
-                                        <View
-                                            style={{
-                                                display: 'flex',
-                                                flexDirection: 'row',
-                                                height: 30,
-                                                alignItems: 'center',
-                                                backgroundColor: '#252527',
-                                                borderRadius: 4,
-                                                overflow: 'hidden',
-                                            }}
-                                        >
-                                            {team.cover ? (
-                                                <Image
-                                                    source={{ uri: `https://mangalib.me/uploads/team/${team.slug}/cover/${team.cover}_250x350.jpg` }}
-                                                    style={{ height: 30, width: 20, resizeMode: 'cover' }}
-                                                />
-                                            ) : (
-                                                <Image
-                                                    source={{ uri: `https://cover.imglib.info/uploads/no-image.png` }}
-                                                    style={{ height: 30, width: 20, resizeMode: 'cover' }}
-                                                />
-                                            )}
-                                            <Text style={{ color: '#ddd', marginHorizontal: 8 }}>{team.name}</Text>
-                                        </View>
-                                    );
+                                    return <TeamCard team={team} />;
                                 })}
                             </View>
                         </>
