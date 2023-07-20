@@ -6,7 +6,7 @@ type Props = {
 };
 
 const MangaInfo: React.FC<Props> = ({ children }) => {
-    return <View style={{ marginTop: 5, display: 'flex', flexDirection: 'row', gap: 8, justifyContent: 'center' }}>{children}</View>;
+    return <View style={{ marginVertical: 5, display: 'flex', flexDirection: 'row', gap: 8, justifyContent: 'center' }}>{children}</View>;
 };
 
 export default MangaInfo;

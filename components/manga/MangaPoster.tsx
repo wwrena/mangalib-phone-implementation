@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image, ImageBackground } from 'react-native';
-import { PosterTheme } from '../styles/MangaPoster';
+import { PosterTheme } from '../../styles/MangaPoster';
 
 type Props = {
     posterLink: string;

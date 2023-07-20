@@ -2,7 +2,7 @@ import React from 'react';
 import { View, ViewStyle } from 'react-native';
 
 type Props = {
-    children: any;
+    children?: any;
     style?: ViewStyle;
 };
 

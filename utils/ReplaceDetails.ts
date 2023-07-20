@@ -9,5 +9,7 @@ export function ReplaceDetails(details: string) {
     if (lowerCase == 'издательство') return 'publisher';
     if (lowerCase == 'загружено глав') return 'chapters';
     if (lowerCase == 'альтернативные названия') return 'alternative_names';
+    if (lowerCase == 'возрастной рейтинг') return 'age_restriction';
+    if (lowerCase == 'формат выпуска') return 'publish_type';
     return details;
 }

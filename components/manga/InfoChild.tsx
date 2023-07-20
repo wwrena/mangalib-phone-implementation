@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text } from 'react-native';
-import { AppTheme } from '../styles/AppTheme';
+import { AppTheme } from '../../styles/AppTheme';
 
 type Props = {
     title: string;

@@ -2,17 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { Text, ScrollView, View, TouchableOpacity, Image } from 'react-native';
 import { ITitle } from '../types/ITitle';
 import { AppTheme } from '../styles/AppTheme';
-import MangaPoster from '../components/MangaPoster';
+import MangaPoster from '../components/manga/MangaPoster';
 import MangaDetailsComponent from '../components/childs/MangaDetailsComponent';
 import MangaInfo from '../components/childs/MangaInfo';
 import ContentSwitcher from '../components/childs/ContentSwitcher';
-import MangaInformation from '../components/MangaInformation';
-import MangaChapters from '../components/MangaChapters';
+import MangaInformation from '../components/manga/MangaInformation';
+import MangaChapters from '../components/manga/MangaChapters';
 import SafeView from '../components/childs/SafeView';
 import cheerio from 'cheerio';
 import { ReplaceDetails } from '../utils/ReplaceDetails';
 import { ISlowDetails } from '../types/ISlowDetails';
-import { useFocusEffect, useIsFocused } from '@react-navigation/native';
+import { useIsFocused } from '@react-navigation/native';
 import { ITeams } from '../types/ITeams';
 
 type Props = {
@@ -26,7 +26,7 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
     const [slowDetails, setSlowDetails] = useState<ISlowDetails | null>(null);
     const [genres, setGenres] = useState<string[] | null>(null);
     const [teams, setTeams] = useState<ITeams[] | null>(null);
-    const isFocused = useIsFocused();
+    // const isFocused = useIsFocused();
 
     const setTeamsComponentData = (data: any) => {
         const regex = /window\.__DATA__ = ({[^;]+})/;
@@ -96,11 +96,11 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
         }
     }, []);
 
-    useEffect(() => {
-        if (isFocused) {
-            setSwitcher('Информация');
-        }
-    }, [isFocused]);
+    // useEffect(() => {
+    //     if (isFocused) {
+    //         setSwitcher('Информация');
+    //     }
+    // }, [isFocused]);
 
     return (
         <ScrollView style={{ backgroundColor: '#111', flex: 1 }}>
@@ -118,11 +118,19 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
                         {details.name}
                     </Text>
                     <MangaInfo>
+                        {slowDetails ? (
+                            <Text style={{ color: slowDetails.age_restriction == '16+' || '18+' ? 'red' : '#ddd' }}>
+                                {slowDetails?.age_restriction}
+                            </Text>
+                        ) : null}
                         <Text style={{ color: '#868e96' }}>{details.releaseDate} г.</Text>
                         {slowDetails ? <Text style={{ color: '#868e96' }}>{slowDetails.type}</Text> : null}
                         <Text style={{ color: '#868e96' }}>
                             <Image source={require('../assets/app/star.png')} style={{ width: 14, height: 14, resizeMode: 'cover' }} />
-                            <Text style={{ fontWeight: '600' }}> {details.rate_avg}</Text>
+                            <Text style={{ fontWeight: '600' }}>
+                                {' '}
+                                {details.rate_avg} <Text style={{ fontWeight: '400' }}>[{(details.rate / 1000).toFixed(1)}K]</Text>
+                            </Text>
                         </Text>
                     </MangaInfo>
                 </SafeView>

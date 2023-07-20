@@ -10,4 +10,5 @@ export interface ITitle {
     views: number;
     href: string;
     releaseDate: string;
+    rate: number;
 }

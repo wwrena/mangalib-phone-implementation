@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, ActivityIndicator, Image } from 'react-native';
-import { AppTheme } from '../styles/AppTheme';
-import { ITitle } from '../types/ITitle';
-import SafeView from './childs/SafeView';
-import { ISlowDetails } from '../types/ISlowDetails';
+import { AppTheme } from '../../styles/AppTheme';
+import { ITitle } from '../../types/ITitle';
+import SafeView from '../childs/SafeView';
+import { ISlowDetails } from '../../types/ISlowDetails';
 import InfoChild from './InfoChild';
-import { ITeams } from '../types/ITeams';
-import Separator from './Separator';
+import { ITeams } from '../../types/ITeams';
+import Separator from '../Separator';
+import { clearSpaces } from '../../utils/ClearSpaces';
+import Related from './Related';
+import Heading from '../Text/Heading';
 
 type Props = {
     details: ITitle;
@@ -29,10 +32,6 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
         }
     };
 
-    useEffect(() => {
-        console.log('teams', teams);
-    }, []);
-
     return (
         <View style={{ paddingBottom: 80 }}>
             <SafeView>
@@ -40,12 +39,10 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                     <InfoChild title='Статус тайтла' data={slowDetails?.manga_status} />
                     <InfoChild title='Статус перевода' data={slowDetails?.translation_status} />
                     <InfoChild title='Загружено глав' data={details?.chap_count} />
+                    <InfoChild title='Формат выпуска' data={slowDetails?.publish_type} />
                     <InfoChild title='Автор' data={slowDetails?.author} />
                     <InfoChild title='Художник' data={slowDetails?.artist} />
-                    {/* <Text style={{ paddingVertical: 4 }}>
-                    <Text style={{ color: '#868E96' }}>Издатели: </Text>
-                    <Text style={{ ...AppTheme.textWhite }}>{slowDetails?.publisher}</Text>
-                </Text> */}
+                    <InfoChild title='Издатель' data={clearSpaces(slowDetails?.publisher)} />
                 </View>
                 <View style={{ paddingTop: 9 }}>
                     <Text style={{ ...AppTheme.textWhite }} numberOfLines={descriptionNumberOfLines}>
@@ -80,10 +77,9 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                     </View>
                     {teams ? (
                         <>
-                            <Text style={{ color: 'white', fontWeight: '600', marginVertical: 12, fontSize: 16 }}>Переводчики</Text>
+                            <Heading>Переводчики</Heading>
                             <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                                 {teams.map((team: ITeams) => {
-                                    console.log(`https://mangalib.me/uploads/team/${team.slug}/cover/${team.cover}_250x350.jpg`);
                                     return (
                                         <View
                                             style={{
@@ -117,6 +113,9 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                 </View>
             </SafeView>
             <Separator />
+            <SafeView>
+                <Related url={details.href} />
+            </SafeView>
         </View>
     );
 };
