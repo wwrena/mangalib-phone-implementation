@@ -43,7 +43,6 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
             <TouchableOpacity
                 onPress={() => {
                     navigation.goBack();
-                    navigation.navigate('MainScreen');
                 }}
                 style={{ paddingBottom: 12 }}
             >

@@ -5,6 +5,8 @@ import { ITitle } from '../../types/ITitle';
 import SafeView from '../childs/SafeView';
 import cheerio from 'cheerio';
 import { useNavigation } from '@react-navigation/native';
+import { AppTheme } from '../../styles/AppTheme';
+import { getTimeAgo } from '../../utils/comments/FormatDate';
 
 type Props = {
     mangaLink: string;
@@ -81,6 +83,7 @@ const MangaChapters: React.FC<Props> = ({ mangaLink, details }) => {
                 chapters.map((item: IChapter) => {
                     return (
                         <TouchableOpacity
+                            key={item.chapter_id}
                             onPress={() => {
                                 handleChapterClick(item);
                             }}
@@ -90,7 +93,7 @@ const MangaChapters: React.FC<Props> = ({ mangaLink, details }) => {
                                     Том {item.chapter_volume} Глава {item.chapter_number} {item.chapter_name ? `- ${item.chapter_name}` : null}
                                 </Text>
                                 <View style={{ display: 'flex', gap: 8, flexDirection: 'row', marginTop: 4 }}>
-                                    <Text style={{ color: '#868e96' }}>{item.chapter_created_at.split(' ')[0].replaceAll('-', '.')}</Text>
+                                    <Text style={{ color: '#868e96' }}>{getTimeAgo(item.chapter_created_at)}</Text>
                                     <Text style={{ color: '#868e96' }}>{item.username}</Text>
                                 </View>
                             </View>
@@ -98,7 +101,12 @@ const MangaChapters: React.FC<Props> = ({ mangaLink, details }) => {
                     );
                 })
             ) : (
-                <ActivityIndicator style={{ flex: 1, height: '100%', marginVertical: '30%' }} />
+                <View style={{ flex: 1, height: '100%', marginVertical: '40%' }}>
+                    <ActivityIndicator />
+                    <Text style={{ textAlign: 'center', ...AppTheme.textWhite, fontWeight: '500', marginTop: 14 }}>
+                        Загружаем главы. Никуда не уходите
+                    </Text>
+                </View>
             )}
         </SafeView>
     );

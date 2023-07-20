@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Text, ScrollView, View, TouchableOpacity, Image } from 'react-native';
 import { ITitle } from '../types/ITitle';
 import { AppTheme } from '../styles/AppTheme';
@@ -14,6 +14,7 @@ import { ReplaceDetails } from '../utils/ReplaceDetails';
 import { ISlowDetails } from '../types/ISlowDetails';
 import { useIsFocused } from '@react-navigation/native';
 import { ITeams } from '../types/ITeams';
+import Comments from '../components/manga/comments/Comments';
 
 type Props = {
     route: any;
@@ -26,6 +27,7 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
     const [slowDetails, setSlowDetails] = useState<ISlowDetails | null>(null);
     const [genres, setGenres] = useState<string[] | null>(null);
     const [teams, setTeams] = useState<ITeams[] | null>(null);
+    const posterRef = useRef(null);
     // const isFocused = useIsFocused();
 
     const setTeamsComponentData = (data: any) => {
@@ -173,6 +175,7 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
 
                 {switcher == 'Информация' ? <MangaInformation details={details} slowDetails={slowDetails} genres={genres} teams={teams} /> : null}
                 {switcher == 'Главы' ? <MangaChapters mangaLink={details.href} details={details} /> : null}
+                {switcher == 'Комментарии' ? <Comments id={details.id} /> : null}
             </MangaDetailsComponent>
         </ScrollView>
     );

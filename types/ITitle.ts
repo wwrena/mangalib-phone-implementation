@@ -1,4 +1,5 @@
 export interface ITitle {
+    id: number;
     name: string;
     rus_name: string;
     eng_name: string;

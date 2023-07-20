@@ -52,7 +52,7 @@ const Related: React.FC<Props> = ({ url }) => {
             {data
                 ? data.map((item: any) => {
                       return (
-                          <View>
+                          <View key={item.titleName}>
                               <Text>{item}</Text>
                           </View>
                       );

@@ -81,7 +81,7 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                             <Heading>Переводчики</Heading>
                             <View style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: 8 }}>
                                 {teams.map((team: ITeams) => {
-                                    return <TeamCard team={team} />;
+                                    return <TeamCard key={team.id} team={team} />;
                                 })}
                             </View>
                         </>
