@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Image, Text, View } from 'react-native';
+import { ActivityIndicator, FlatList, Text, View } from 'react-native';
 import { IComment } from '../../../types/IComment';
 import SafeView from '../../childs/SafeView';
 import Comment from './Comment';
@@ -25,8 +25,8 @@ const Comments: React.FC<Props> = ({ id }) => {
                     setComments(response.comments);
                     return;
                 }
-                setComments((prevComments: any) => [...prevComments, ...response.comments]);
                 console.log(`Rendering page ${currentPage}`);
+                setComments((prevComments: any) => [...prevComments, ...response.comments]);
             })
             .catch((error) => {
                 console.error('Error fetching comments:', error);
@@ -48,8 +48,10 @@ const Comments: React.FC<Props> = ({ id }) => {
                     data={comments}
                     renderItem={renderComment}
                     keyExtractor={(item) => item.id.toString()}
+                    initialNumToRender={5}
+                    maxToRenderPerBatch={5}
                     onEndReached={loadMoreComments}
-                    onEndReachedThreshold={0.7}
+                    onEndReachedThreshold={0.2}
                 />
             ) : (
                 <View style={{ marginVertical: '40%' }}>

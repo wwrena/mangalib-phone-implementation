@@ -18,7 +18,6 @@ export const AppTheme = StyleSheet.create({
     resultList: {
         marginHorizontal: 12,
         display: 'flex',
-        flexDirection: 'row',
         flexWrap: 'wrap',
         gap: 6,
         marginBottom: 100,

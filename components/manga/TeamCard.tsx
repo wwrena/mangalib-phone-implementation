@@ -22,10 +22,10 @@ const TeamCard: React.FC<Props> = ({ team }) => {
             {team.cover ? (
                 <Image
                     source={{ uri: `https://mangalib.me/uploads/team/${team.slug}/cover/${team.cover}_250x350.jpg` }}
-                    style={{ height: 30, width: 20, resizeMode: 'cover' }}
+                    style={{ height: 30, width: 30, resizeMode: 'cover' }}
                 />
             ) : (
-                <Image source={{ uri: `https://cover.imglib.info/uploads/no-image.png` }} style={{ height: 30, width: 20, resizeMode: 'cover' }} />
+                <Image source={{ uri: `https://cover.imglib.info/uploads/no-image.png` }} style={{ height: 30, width: 30, resizeMode: 'cover' }} />
             )}
             <Text style={{ color: '#ddd', marginHorizontal: 8 }}>{team.name}</Text>
         </View>

@@ -7,13 +7,13 @@ type Props = {
     url: any;
 };
 
-const Related: React.FC<Props> = ({ url }) => {
+const Similar: React.FC<Props> = ({ url }) => {
     const [data, setData] = useState<any>([]);
     useEffect(() => {
         fetch(url).then((res) => {
             res.text().then((res) => {
                 const $ = cheerio.load(res);
-                const slider: any = $('[data-slider=related]');
+                const slider: any = $('[data-slider=similar]');
 
                 const filterData = (obj: any) => {
                     const raw = obj.split('\n').map((title: any) => title.trim());
@@ -71,7 +71,7 @@ const Related: React.FC<Props> = ({ url }) => {
     }, []);
     return (
         <View>
-            <Heading>Связанное</Heading>
+            <Heading>Похожее</Heading>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
                     {data
@@ -91,10 +91,9 @@ const Related: React.FC<Props> = ({ url }) => {
                                       <Image source={{ uri: `${item.cover}` }} style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
                                       <View style={{ paddingVertical: 7, paddingHorizontal: 12, display: 'flex', justifyContent: 'space-between' }}>
                                           <View>
-                                              <Text style={{ color: '#1484FF', fontSize: 12, marginBottom: 3 }}>{item.meta}</Text>
+                                              <Text style={{ color: '#1484FF', fontSize: 12, marginBottom: 3 }}>{item.type}</Text>
                                               <Text style={{ color: '#ddd', fontWeight: '600', width: 210 }}>{item.name}</Text>
                                           </View>
-                                          <Text style={{ color: '#aaa', fontSize: 13 }}>{item.type}</Text>
                                       </View>
                                   </View>
                               );
@@ -106,4 +105,4 @@ const Related: React.FC<Props> = ({ url }) => {
     );
 };
 
-export default Related;
+export default Similar;

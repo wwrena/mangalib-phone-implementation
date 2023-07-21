@@ -11,6 +11,7 @@ import { clearSpaces } from '../../utils/ClearSpaces';
 import Related from './Related';
 import Heading from '../Text/Heading';
 import TeamCard from './TeamCard';
+import Similar from './Similar';
 
 type Props = {
     details: ITitle;
@@ -40,9 +41,9 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                     <InfoChild title='Статус тайтла' data={slowDetails?.manga_status} />
                     <InfoChild title='Статус перевода' data={slowDetails?.translation_status} />
                     <InfoChild title='Загружено глав' data={details?.chap_count} />
-                    <InfoChild title='Формат выпуска' data={slowDetails?.publish_type} />
-                    <InfoChild title='Автор' data={slowDetails?.author} />
-                    <InfoChild title='Художник' data={slowDetails?.artist} />
+                    <InfoChild title='Формат выпуска' data={clearSpaces(slowDetails?.publish_type)} />
+                    <InfoChild title='Автор' data={clearSpaces(slowDetails?.author)} />
+                    <InfoChild title='Художник' data={clearSpaces(slowDetails?.artist)} />
                     <InfoChild title='Издатель' data={clearSpaces(slowDetails?.publisher)} />
                 </View>
                 <View style={{ paddingTop: 9 }}>
@@ -61,6 +62,7 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                             genres.map((genre) => {
                                 return (
                                     <TouchableOpacity
+                                        key={genre.toString()}
                                         style={{ backgroundColor: '#76767f1f', borderColor: '#38383a', borderWidth: 1, borderRadius: 4 }}
                                     >
                                         <Text style={{ color: '#aaa', paddingVertical: 5, paddingHorizontal: 10, textTransform: 'capitalize' }}>
@@ -91,6 +93,10 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
             <Separator />
             <SafeView>
                 <Related url={details.href} />
+            </SafeView>
+            <Separator />
+            <SafeView>
+                <Similar url={details.href} />
             </SafeView>
         </View>
     );

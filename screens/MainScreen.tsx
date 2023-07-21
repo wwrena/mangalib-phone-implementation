@@ -4,13 +4,17 @@ import { AppTheme } from '../styles/AppTheme';
 import { ITitle } from '../types/ITitle';
 import { ListView } from '../styles/ListView';
 import { useNavigation } from '@react-navigation/native';
+import SearchSwitcher from '../components/search/SearchSwitcher';
+import RenderUsers from '../components/search/RenderUsers';
+import SafeView from '../components/childs/SafeView';
 
 export const MainScreen: React.FC = () => {
     const navigation: any = useNavigation();
 
-    const [search, setSearch] = useState<string>('');
+    const [search, setSearch] = useState<string>('кагуя');
     const [result, setResult] = useState<ITitle[] | null>(null);
     const [pending, setPending] = useState<Boolean>(false);
+    const [searchType, setSearchType] = useState<string>('manga');
 
     // Debounce start; ignore it
     const debounce = <F extends (...args: any[]) => void>(func: F, delay: number) => {
@@ -33,7 +37,7 @@ export const MainScreen: React.FC = () => {
         if (search != '') {
             setResult(null);
             setPending(true);
-            fetch(`https://mangalib.me/search?type=manga&q=${search}`).then((res) => {
+            fetch(`https://mangalib.me/search?type=${searchType}&q=${search}`).then((res) => {
                 res.text().then((res) => {
                     const response = JSON.parse(res);
                     setResult(response);
@@ -41,7 +45,7 @@ export const MainScreen: React.FC = () => {
                 });
             });
         }
-    }, [search]);
+    }, [search, searchType]);
 
     const handleClick = (item: any) => {
         navigation.navigate('MangaDetails', {
@@ -50,7 +54,7 @@ export const MainScreen: React.FC = () => {
     };
 
     const MainScreenRenderer = () => {
-        if (result && pending == false) {
+        if (result && pending == false && searchType == 'manga') {
             return (
                 <ScrollView>
                     <View style={AppTheme.resultList}>
@@ -82,6 +86,8 @@ export const MainScreen: React.FC = () => {
                     </View>
                 </ScrollView>
             );
+        } else if (result && pending == false && searchType == 'user') {
+            return <RenderUsers result={result} />;
         } else if (search == '') {
             return (
                 <View style={{ marginVertical: '80%' }}>
@@ -106,9 +112,23 @@ export const MainScreen: React.FC = () => {
     return (
         <SafeAreaView style={AppTheme.container}>
             <View>
-                <View style={{ ...AppTheme.center, marginBottom: 12 }}>
+                <View style={{ ...AppTheme.center }}>
                     <TextInput placeholder='Поиск' onChangeText={handleSearchChange} style={AppTheme.textInput} />
                 </View>
+                <SafeView>
+                    <View style={{ marginTop: 10, display: 'flex', flexDirection: 'row', gap: 6, marginBottom: 12 }}>
+                        <TouchableOpacity onPress={() => setSearchType('manga')}>
+                            <SearchSwitcher current={searchType} desired='manga'>
+                                Манга
+                            </SearchSwitcher>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => setSearchType('user')}>
+                            <SearchSwitcher current={searchType} desired='user'>
+                                Пользователь
+                            </SearchSwitcher>
+                        </TouchableOpacity>
+                    </View>
+                </SafeView>
                 {MainScreenRenderer()}
             </View>
         </SafeAreaView>
