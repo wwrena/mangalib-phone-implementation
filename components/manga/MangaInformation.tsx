@@ -90,14 +90,8 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                     ) : null}
                 </View>
             </SafeView>
-            <Separator />
-            <SafeView>
-                <Related url={details.href} />
-            </SafeView>
-            <Separator />
-            <SafeView>
-                <Similar url={details.href} />
-            </SafeView>
+            <Related url={details.href} />
+            <Similar url={details.href} />
         </View>
     );
 };

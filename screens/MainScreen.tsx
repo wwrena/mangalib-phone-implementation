@@ -53,6 +53,10 @@ export const MainScreen: React.FC = () => {
         });
     };
 
+    useEffect(() => {
+        setResult(null);
+    }, [searchType]);
+
     const MainScreenRenderer = () => {
         if (result && pending == false && searchType == 'manga') {
             return (
