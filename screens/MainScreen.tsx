@@ -11,7 +11,7 @@ import SafeView from '../components/childs/SafeView';
 export const MainScreen: React.FC = () => {
     const navigation: any = useNavigation();
 
-    const [search, setSearch] = useState<string>('кагуя');
+    const [search, setSearch] = useState<string>('');
     const [result, setResult] = useState<ITitle[] | null>(null);
     const [pending, setPending] = useState<Boolean>(false);
     const [searchType, setSearchType] = useState<string>('manga');
