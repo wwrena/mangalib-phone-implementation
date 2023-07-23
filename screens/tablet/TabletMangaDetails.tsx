@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Touchable, Alert } from 'react-native';
+import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Touchable, Alert, Image } from 'react-native';
 import { ITitle } from '../../types/ITitle';
 import ContentSwitcher from '../../components/childs/ContentSwitcher';
 import SafeView from '../../components/childs/SafeView';
@@ -251,8 +251,24 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
                     </SafeView>
                 </View>
                 <View style={{ position: 'relative', top: -80, width: '77%' }}>
-                    <Text style={{ color: 'white', fontSize: 24, fontWeight: '600' }}>{details.rus_name}</Text>
-                    <Text style={{ color: 'white', fontSize: 18 }}>{details.name}</Text>
+                    <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
+                        <View>
+                            <Text style={{ color: 'white', fontSize: 24, fontWeight: '600' }}>{details.rus_name}</Text>
+                            <Text style={{ color: 'white', fontSize: 18 }}>{details.name}</Text>
+                        </View>
+                        <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'flex-end', gap: 6 }}>
+                            <Text style={{ fontSize: 22, color: 'white', fontWeight: '600' }}>
+                                <Image
+                                    style={{ width: 18, height: 18, resizeMode: 'contain', marginRight: 4 }}
+                                    source={require('../../assets/app/star.png')}
+                                />
+                                {`${details.rate_avg}`}
+                            </Text>
+                            <Text style={{ fontSize: 16, color: 'white', opacity: 0.7, position: 'relative', top: -2 }}>
+                                {(details.rate / 1000).toFixed(1)}K
+                            </Text>
+                        </View>
+                    </View>
                     <View style={{ backgroundColor: 'rgb(28,28,30)', borderRadius: 4, marginTop: 12, minHeight: 600 }}>
                         <SafeView>
                             <SafeView>

@@ -7,6 +7,7 @@ import TeamCard from '../TeamCard';
 import Related from '../Related';
 import Similar from '../Similar';
 import { isTablet } from '../../../other/constants';
+import Listed from './Listed';
 
 type Props = {
     details: ITitle;
@@ -60,6 +61,7 @@ const MangaInformationTablet: React.FC<Props> = ({ details, genres, teams }) => 
             ) : null}
             <Related isTablet={isTablet} url={details.href} />
             <Similar isTablet={isTablet} url={details.href} />
+            <Listed isTablet={isTablet} url={details.href} />
         </View>
     );
 };
