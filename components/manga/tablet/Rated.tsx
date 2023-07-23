@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, Image } from 'react-native';
 import cheerio from 'cheerio';
 
 type Props = {
     url: string;
     isTablet: Boolean;
+    rate: string;
 };
 
-const Listed: React.FC<Props> = ({ url, isTablet }) => {
+const Rated: React.FC<Props> = ({ url, isTablet, rate }) => {
     const [listed, setListed] = useState<Object[] | null>(null);
     const [overall, setOverall] = useState<number>(0);
     useEffect(() => {
@@ -39,10 +40,10 @@ const Listed: React.FC<Props> = ({ url, isTablet }) => {
                         }
 
                         if (foundKey) {
-                            secondObject[key] = element;
-                        } else {
                             firstObject[key] = element;
                             sum += element.value;
+                        } else {
+                            secondObject[key] = element;
                         }
                     }
                 }
@@ -53,16 +54,23 @@ const Listed: React.FC<Props> = ({ url, isTablet }) => {
         });
     }, []);
     return (
-        <View style={{ marginVertical: 18, width: '50%' }}>
+        <View style={{ marginVertical: 18 }}>
             {overall != 0 ? (
-                <Text style={{ color: '#ddd', fontSize: 15, fontWeight: '600', marginBottom: 10 }}>В списках у {overall} человек</Text>
+                <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '50%' }}>
+                    <Text style={{ color: '#ddd', fontSize: 15, fontWeight: '600', marginBottom: 10, marginRight: '27%' }}>Оценки пользователей</Text>
+                    <View style={{ display: 'flex', flexDirection: 'row' }}>
+                        <Image source={require('../../../assets/app/star.png')} style={{ width: 15, height: 15, marginRight: 3 }} />
+                        <Text style={{ color: 'white', fontWeight: '700' }}>{rate}</Text>
+                        <Text style={{ color: '#ddd', fontSize: 12, position: 'relative', top: 2 }}> {(overall / 1000).toFixed(1)}К</Text>
+                    </View>
+                </View>
             ) : null}
             {listed ? (
                 <View style={{ display: 'flex', gap: 8 }}>
                     {listed.map((item: any) => {
                         return (
                             <View key={item.value} style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ color: '#ddd', width: '18%' }}>{item.listedKey}</Text>
+                                <Text style={{ color: '#ddd', width: '7%' }}>{item.listedKey}</Text>
                                 <View style={{ width: '30%', backgroundColor: '#7474811a', borderRadius: 8, overflow: 'hidden' }}>
                                     <View
                                         style={{
@@ -86,4 +94,4 @@ const Listed: React.FC<Props> = ({ url, isTablet }) => {
     );
 };
 
-export default Listed;
+export default Rated;

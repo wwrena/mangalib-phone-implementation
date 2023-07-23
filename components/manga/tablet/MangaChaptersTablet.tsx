@@ -7,7 +7,6 @@ import cheerio from 'cheerio';
 import { useNavigation } from '@react-navigation/native';
 import { AppTheme } from '../../../styles/AppTheme';
 import { getTimeAgo } from '../../../utils/comments/FormatDate';
-import axios from 'axios';
 
 type Props = {
     mangaLink: string;
@@ -45,7 +44,6 @@ const MangaChaptersTablet: React.FC<Props> = ({ mangaLink, details }) => {
         fetch(`${mangaLink}/v${item.chapter_volume}/c${item.chapter_number}?`).then((response) => {
             response.text().then((html) => {
                 const $ = cheerio.load(html);
-                console.log(html, `${mangaLink}/v${item.chapter_volume}/c${item.chapter_number}`);
                 const data: any = $('#pg').html()?.split('window.__pg = ')[1].split(';')[0];
 
                 try {

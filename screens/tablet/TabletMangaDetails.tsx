@@ -157,7 +157,7 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
                     <View style={{ width: '100%', height: 300, backgroundColor: 'rgba(0,0,0,.6)' }}></View>
                 </ImageBackground>
             )}
-            <View style={{ display: 'flex', flexDirection: 'row' }}>
+            <View style={{ display: 'flex', flexDirection: 'row', gap: 6 }}>
                 <View>
                     <SafeView style={{ position: 'relative', top: -80, maxWidth: 280 }}>
                         <AutoHeightImage source={{ uri: details.coverImage }} width={280} style={{ borderRadius: 6, marginBottom: 17 }} />
@@ -250,7 +250,7 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
                         ) : null}
                     </SafeView>
                 </View>
-                <View style={{ position: 'relative', top: -80, width: '77%' }}>
+                <View style={{ position: 'relative', top: -80, width: '76%' }}>
                     <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%' }}>
                         <View>
                             <Text style={{ color: 'white', fontSize: 24, fontWeight: '600' }}>{details.rus_name}</Text>
