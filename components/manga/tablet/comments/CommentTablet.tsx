@@ -1,14 +1,14 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
-import { IComment } from '../../../types/IComment';
-import { getTimeAgo } from '../../../utils/comments/FormatDate';
+import { IComment } from '../../../../types/IComment';
+import { getTimeAgo } from '../../../../utils/comments/FormatDate';
 import { useNavigation } from '@react-navigation/native';
 
 type Props = {
     comment: IComment;
 };
 
-const Comment: React.FC<Props> = ({ comment }) => {
+const CommentTablet: React.FC<Props> = ({ comment }) => {
     const navigation: any = useNavigation();
     const rating = comment.votes_up - comment.votes_down;
     const ratingColor = (rating: number) => {
@@ -34,17 +34,17 @@ const Comment: React.FC<Props> = ({ comment }) => {
                             {comment.user.avatar != '0' ? (
                                 <Image
                                     source={{ uri: `https://mangalib.me/uploads/users/${comment.user.id}/${comment.user.avatar}` }}
-                                    style={{ height: 36, width: 36, resizeMode: 'cover' }}
+                                    style={{ height: 24, width: 24, resizeMode: 'cover' }}
                                 />
                             ) : (
                                 <Image
                                     source={{ uri: `https://mangalib.me/uploads/users/placeholder.png` }}
-                                    style={{ height: 36, width: 36, resizeMode: 'cover' }}
+                                    style={{ height: 24, width: 24, resizeMode: 'cover' }}
                                 />
                             )}
-                            <View style={{ marginLeft: 12 }}>
+                            <View style={{ marginLeft: 12, display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                                 <Text style={{ color: '#ddd', fontWeight: '500' }}>{comment.user.username}</Text>
-                                <Text style={{ color: '#aaa', marginTop: 3 }}>{getTimeAgo(comment.created_at)}</Text>
+                                <Text style={{ color: '#aaa', marginLeft: 6 }}>{getTimeAgo(comment.created_at)}</Text>
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -63,4 +63,4 @@ const Comment: React.FC<Props> = ({ comment }) => {
     );
 };
 
-export default Comment;
+export default CommentTablet;

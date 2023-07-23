@@ -12,4 +12,6 @@ export interface ITitle {
     href: string;
     releaseDate: string;
     rate: number;
+    slug: string;
+    background: string;
 }

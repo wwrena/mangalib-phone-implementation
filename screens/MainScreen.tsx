@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, TextInput, View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { SafeAreaView, TextInput, View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import { AppTheme } from '../styles/AppTheme';
 import { ITitle } from '../types/ITitle';
 import { ListView } from '../styles/ListView';
@@ -11,10 +11,11 @@ import SafeView from '../components/childs/SafeView';
 export const MainScreen: React.FC = () => {
     const navigation: any = useNavigation();
 
-    const [search, setSearch] = useState<string>('');
+    const [search, setSearch] = useState<string>('teikukuheia');
     const [result, setResult] = useState<ITitle[] | null>(null);
     const [pending, setPending] = useState<Boolean>(false);
-    const [searchType, setSearchType] = useState<string>('manga');
+    const [searchType, setSearchType] = useState<string>('user');
+    const isTablet: Boolean = true;
 
     // Debounce start; ignore it
     const debounce = <F extends (...args: any[]) => void>(func: F, delay: number) => {
@@ -48,6 +49,10 @@ export const MainScreen: React.FC = () => {
     }, [search, searchType]);
 
     const handleClick = (item: any) => {
+        if (isTablet) {
+            navigation.navigate('MangaDetailsTablet', { details: item });
+            return;
+        }
         navigation.navigate('MangaDetails', {
             details: item,
         });

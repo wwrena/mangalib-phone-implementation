@@ -17,7 +17,13 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
     const images: IChapterImage[] = props.images;
     const serverLink: string = props.serverLink;
     const chapterInfo: string = props.chapterInfo;
-    const deviceWidth = Dimensions.get('window').width;
+    const deviceWidth = () => {
+        const width = Dimensions.get('window').width;
+        if (width > 960) {
+            return 680;
+        }
+        return width;
+    };
     const navigation: any = useNavigation();
 
     const scrollViewRef = useRef(null);
@@ -54,23 +60,25 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
                 </SafeView>
             </TouchableOpacity>
             <ScrollView style={{ backgroundColor: '#111' }} ref={scrollViewRef} onScroll={scrollHandler} scrollEventThrottle={100}>
-                {images
-                    ? images.map((image: IChapterImage, index: number) => {
-                          return (
-                              <AutoHeightImage
-                                  key={index}
-                                  width={deviceWidth}
-                                  onLoad={() => {
-                                      if (counterShouldDisplay == false) setCounterShouldDisplay(true);
-                                  }}
-                                  onError={() => {
-                                      console.warn(`Failed to load ${serverLink + image.u}`);
-                                  }}
-                                  source={{ uri: serverLink + image.u }}
-                              />
-                          );
-                      })
-                    : null}
+                <View style={{ display: 'flex', alignItems: 'center' }}>
+                    {images
+                        ? images.map((image: IChapterImage, index: number) => {
+                              return (
+                                  <AutoHeightImage
+                                      key={index}
+                                      width={deviceWidth()}
+                                      onLoad={() => {
+                                          if (counterShouldDisplay == false) setCounterShouldDisplay(true);
+                                      }}
+                                      onError={(error) => {
+                                          console.warn(`Failed to load ${serverLink + image.u}. Reason: ${error}`);
+                                      }}
+                                      source={{ uri: serverLink + image.u }}
+                                  />
+                              );
+                          })
+                        : null}
+                </View>
             </ScrollView>
         </SafeAreaView>
     );

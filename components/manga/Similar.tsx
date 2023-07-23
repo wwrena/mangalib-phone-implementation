@@ -7,9 +7,10 @@ import SafeView from '../childs/SafeView';
 
 type Props = {
     url: any;
+    isTablet: boolean;
 };
 
-const Similar: React.FC<Props> = ({ url }): any => {
+const Similar: React.FC<Props> = ({ url, isTablet }): any => {
     const [data, setData] = useState<any>([]);
     useEffect(() => {
         fetch(url).then((res) => {
@@ -74,37 +75,35 @@ const Similar: React.FC<Props> = ({ url }): any => {
     if (data.length != 0) {
         return (
             <View>
-                <Separator />
-                <SafeView>
-                    <Heading>Похожее</Heading>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
-                            {data.map((item: any, index: number) => {
-                                return (
-                                    <View
-                                        key={index}
-                                        style={{
-                                            width: 310,
-                                            backgroundColor: 'rgb(37,37,39)',
-                                            display: 'flex',
-                                            flexDirection: 'row',
-                                            overflow: 'hidden',
-                                            borderRadius: 6,
-                                        }}
-                                    >
-                                        <Image source={{ uri: `${item.cover}` }} style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
-                                        <View style={{ paddingVertical: 7, paddingHorizontal: 12, display: 'flex', justifyContent: 'space-between' }}>
-                                            <View>
-                                                <Text style={{ color: '#1484FF', fontSize: 12, marginBottom: 3 }}>{item.type}</Text>
-                                                <Text style={{ color: '#ddd', fontWeight: '600', width: 210 }}>{item.name}</Text>
-                                            </View>
+                {isTablet == false ? <Separator /> : null}
+                <Heading>Похожее</Heading>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
+                        {data.map((item: any, index: number) => {
+                            return (
+                                <View
+                                    key={index}
+                                    style={{
+                                        width: 310,
+                                        backgroundColor: 'rgb(37,37,39)',
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        overflow: 'hidden',
+                                        borderRadius: 6,
+                                    }}
+                                >
+                                    <Image source={{ uri: `${item.cover}` }} style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
+                                    <View style={{ paddingVertical: 7, paddingHorizontal: 12, display: 'flex', justifyContent: 'space-between' }}>
+                                        <View>
+                                            <Text style={{ color: '#1484FF', fontSize: 12, marginBottom: 3 }}>{item.type}</Text>
+                                            <Text style={{ color: '#ddd', fontWeight: '600', width: 210 }}>{item.name}</Text>
                                         </View>
                                     </View>
-                                );
-                            })}
-                        </View>
-                    </ScrollView>
-                </SafeView>
+                                </View>
+                            );
+                        })}
+                    </View>
+                </ScrollView>
             </View>
         );
     }

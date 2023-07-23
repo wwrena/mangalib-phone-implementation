@@ -1,23 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Dimensions, FlatList, Text, View } from 'react-native';
-import { IComment } from '../../../types/IComment';
-import SafeView from '../../childs/SafeView';
-import Comment from './Comment';
+import { ActivityIndicator, Dimensions, FlatList, Text, TouchableOpacity, View } from 'react-native';
+import { IComment } from '../../../../types/IComment';
+import SafeView from '../../../childs/SafeView';
+import CommentTablet from './CommentTablet';
 
 type Props = {
     id: number;
 };
 
-const Comments: React.FC<Props> = ({ id }) => {
+const CommentsTablet: React.FC<Props> = ({ id }) => {
     const [comments, setComments] = useState<IComment[] | any>(null);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [order, setOrder] = useState<string>('latest');
 
     useEffect(() => {
         fetchComments(currentPage);
     }, [currentPage]);
 
     const fetchComments = (pageNumber: number) => {
-        fetch(`https://mangalib.me/api/v2/comments?type=manga&post_id=${id}&order=latest&page=${pageNumber}`)
+        fetch(`https://mangalib.me/api/v2/comments?type=manga&post_id=${id}&order=${order}&page=${pageNumber}`)
             .then((res) => res.text())
             .then((res) => {
                 const response = JSON.parse(res);
@@ -25,7 +26,6 @@ const Comments: React.FC<Props> = ({ id }) => {
                     setComments(response.comments);
                     return;
                 }
-                console.log(`Rendering page ${currentPage}`);
                 setComments((prevComments: any) => [...prevComments, ...response.comments]);
             })
             .catch((error) => {
@@ -34,7 +34,7 @@ const Comments: React.FC<Props> = ({ id }) => {
     };
 
     const renderComment = ({ item }: { item: IComment }) => {
-        return <Comment comment={item} />;
+        return <CommentTablet comment={item} />;
     };
 
     const loadMoreComments = () => {
@@ -43,6 +43,16 @@ const Comments: React.FC<Props> = ({ id }) => {
 
     return (
         <View style={{ display: 'flex', alignItems: 'center' }}>
+            {/* <TouchableOpacity
+                onPress={() => {
+                    setOrder('best');
+                    setComments(null);
+                    setCurrentPage(1);
+                }}
+                style={{ backgroundColor: '#7474810d', paddingHorizontal: 7, paddingVertical: 6, borderRadius: 3 }}
+            >
+                <Text style={{ color: '#ddd' }}>Популярные</Text>
+            </TouchableOpacity> */}
             <SafeView style={{ paddingBottom: 80, maxWidth: 960 }}>
                 {comments ? (
                     <FlatList
@@ -65,4 +75,4 @@ const Comments: React.FC<Props> = ({ id }) => {
     );
 };
 
-export default Comments;
+export default CommentsTablet;

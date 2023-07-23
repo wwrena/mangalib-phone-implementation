@@ -136,7 +136,7 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
                         </Text>
                     </MangaInfo>
                 </SafeView>
-                <ContentSwitcher>
+                <ContentSwitcher isTablet={false}>
                     <TouchableOpacity
                         style={{ borderBottomWidth: 1, borderBottomColor: switcher == 'Информация' ? 'orange' : 'rgba(0,0,0,0)', paddingBottom: 13 }}
                         onPress={() => {

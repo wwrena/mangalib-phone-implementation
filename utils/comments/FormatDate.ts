@@ -16,7 +16,7 @@ export function getTimeAgo(timestamp: string): string {
     if (years > 0) {
         return `около ${years} ${getRussianWordForm(years, 'года', 'лет', 'лет')} назад`;
     } else if (months > 0) {
-        return `около ${months} ${getRussianWordForm(months, 'месяца', 'месяцев', 'месяцев')} назад`;
+        return `${months} ${getRussianWordForm(months, 'месяца', 'месяцев', 'месяцев')} назад`;
     } else if (days > 0) {
         return `около ${days} ${getRussianWordForm(days, 'дня', 'дней', 'дней')} назад`;
     } else if (hours > 0) {

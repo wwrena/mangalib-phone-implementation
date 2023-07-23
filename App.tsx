@@ -6,6 +6,8 @@ import MangaDetails from './screens/MangaDetails';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ChapterReader from './components/reader/ChapterReader';
 import ProfileScreen from './screens/ProfileScreen';
+import TabletMangaDetails from './screens/tablet/TabletMangaDetails';
+import TabletProfileScreen from './screens/tablet/TabletProfileScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -24,7 +26,9 @@ export default function App() {
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name='MainScreen' component={MainScreen} />
                 <Stack.Screen name='MangaDetails' component={MangaDetails} />
+                <Stack.Screen name='MangaDetailsTablet' component={TabletMangaDetails} />
                 <Stack.Screen name='Profile' component={ProfileScreen} />
+                <Stack.Screen name='TabletProfile' component={TabletProfileScreen} />
                 <Stack.Screen name='ChapterReader' component={ChapterReader} />
             </Stack.Navigator>
             {/* <Tab.Navigator screenOptions={{ headerShown: false }}>
