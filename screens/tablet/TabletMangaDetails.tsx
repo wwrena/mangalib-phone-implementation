@@ -13,6 +13,7 @@ import MangaInformationTablet from '../../components/manga/tablet/MangaInformati
 import MangaChaptersTablet from '../../components/manga/tablet/MangaChaptersTablet';
 import CommentsTablet from '../../components/manga/tablet/comments/CommentsTablet';
 import { useNavigation } from '@react-navigation/native';
+import { isTablet } from '../../other/constants';
 
 type Props = {
     route: any;
@@ -26,6 +27,7 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
     const [genres, setGenres] = useState<string[] | null>(null);
     const [teams, setTeams] = useState<ITeams[] | null>(null);
     const [chapterInfo, setChapterInfo] = useState<any>(null);
+    const [failure, setFailure] = useState<Boolean>(false);
     const navigation: any = useNavigation();
     // const isFocused = useIsFocused();
 
@@ -101,7 +103,7 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
                     });
                 })
                 .catch((error) => {
-                    console.log(error);
+                    setFailure(true);
                 });
         } catch (error) {
             console.log(error);
@@ -254,7 +256,7 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
                     <View style={{ backgroundColor: 'rgb(28,28,30)', borderRadius: 4, marginTop: 12, minHeight: 600 }}>
                         <SafeView>
                             <SafeView>
-                                <ContentSwitcher isTablet={true} style={{ gap: 18 }}>
+                                <ContentSwitcher isTablet={isTablet} style={{ gap: 18 }}>
                                     <TouchableOpacity
                                         style={{
                                             borderBottomWidth: 1,

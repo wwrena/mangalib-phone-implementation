@@ -7,15 +7,15 @@ import { useNavigation } from '@react-navigation/native';
 import SearchSwitcher from '../components/search/SearchSwitcher';
 import RenderUsers from '../components/search/RenderUsers';
 import SafeView from '../components/childs/SafeView';
+import { isTablet } from '../other/constants';
 
 export const MainScreen: React.FC = () => {
     const navigation: any = useNavigation();
 
-    const [search, setSearch] = useState<string>('teikukuheia');
+    const [search, setSearch] = useState<string>('');
     const [result, setResult] = useState<ITitle[] | null>(null);
     const [pending, setPending] = useState<Boolean>(false);
-    const [searchType, setSearchType] = useState<string>('user');
-    const isTablet: Boolean = true;
+    const [searchType, setSearchType] = useState<string>('manga');
 
     // Debounce start; ignore it
     const debounce = <F extends (...args: any[]) => void>(func: F, delay: number) => {
