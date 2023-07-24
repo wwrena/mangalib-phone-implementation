@@ -15,6 +15,7 @@ import { ISlowDetails } from '../types/ISlowDetails';
 import { useIsFocused } from '@react-navigation/native';
 import { ITeams } from '../types/ITeams';
 import Comments from '../components/manga/comments/Comments';
+import { isTablet } from '../other/constants';
 
 type Props = {
     route: any;
@@ -107,7 +108,7 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
     return (
         <ScrollView style={{ backgroundColor: '#111', flex: 1 }}>
             <View style={{ ...AppTheme.flexCenter }}>
-                <MangaPoster posterLink={details.coverImage} />
+                <MangaPoster posterLink={details.coverImage} details={details} />
             </View>
             <MangaDetailsComponent>
                 <SafeView>
@@ -136,7 +137,7 @@ const MangaDetails: React.FC<Props> = ({ route }) => {
                         </Text>
                     </MangaInfo>
                 </SafeView>
-                <ContentSwitcher isTablet={false}>
+                <ContentSwitcher isTablet={isTablet()}>
                     <TouchableOpacity
                         style={{ borderBottomWidth: 1, borderBottomColor: switcher == 'Информация' ? 'orange' : 'rgba(0,0,0,0)', paddingBottom: 13 }}
                         onPress={() => {

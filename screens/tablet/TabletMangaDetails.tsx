@@ -272,7 +272,7 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
                     <View style={{ backgroundColor: 'rgb(28,28,30)', borderRadius: 4, marginTop: 12, minHeight: 600 }}>
                         <SafeView>
                             <SafeView>
-                                <ContentSwitcher isTablet={isTablet} style={{ gap: 18 }}>
+                                <ContentSwitcher isTablet={isTablet()} style={{ gap: 18 }}>
                                     <TouchableOpacity
                                         style={{
                                             borderBottomWidth: 1,

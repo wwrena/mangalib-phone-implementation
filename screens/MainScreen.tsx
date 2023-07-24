@@ -49,7 +49,7 @@ export const MainScreen: React.FC = () => {
     }, [search, searchType]);
 
     const handleClick = (item: any) => {
-        if (isTablet) {
+        if (isTablet()) {
             navigation.navigate('MangaDetailsTablet', { details: item });
             return;
         }

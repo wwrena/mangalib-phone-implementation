@@ -52,7 +52,7 @@ const CommentTablet: React.FC<Props> = ({ comment }) => {
                         <Text style={{ color: ratingColor(rating), fontWeight: '500', fontSize: 16 }}>{rating}</Text>
                     </View>
                 </View>
-                <Text style={{ marginTop: 12, color: '#ddd' }}>
+                <Text selectable={true} style={{ marginTop: 12, color: '#ddd' }}>
                     {comment.comment
                         .replaceAll(/<(?!br\s*\/?)[^>]+>/gi, '')
                         .replaceAll('<br>', '\n')

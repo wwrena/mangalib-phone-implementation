@@ -63,6 +63,7 @@ const CommentsTablet: React.FC<Props> = ({ id }) => {
                         maxToRenderPerBatch={5}
                         onEndReached={loadMoreComments}
                         onEndReachedThreshold={0.2}
+                        style={{ width: Dimensions.get('window').width - 400 }}
                     />
                 ) : (
                     <View style={{ marginVertical: '40%' }}>

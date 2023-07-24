@@ -1,9 +1,8 @@
-import React, { useEffect, useState, ReactElement } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { ScrollView, Text, View, Image } from 'react-native';
 import Heading from '../Text/Heading';
 import cheerio from 'cheerio';
 import Separator from '../Separator';
-import SafeView from '../childs/SafeView';
 
 type Props = {
     url: any;

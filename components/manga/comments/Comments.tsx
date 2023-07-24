@@ -43,17 +43,19 @@ const Comments: React.FC<Props> = ({ id }) => {
 
     return (
         <View style={{ display: 'flex', alignItems: 'center' }}>
-            <SafeView style={{ paddingBottom: 80, maxWidth: 960 }}>
+            <SafeView style={{ paddingBottom: 80, maxWidth: 960, width: '100%' }}>
                 {comments ? (
-                    <FlatList
-                        data={comments}
-                        renderItem={renderComment}
-                        keyExtractor={(item) => item.id.toString()}
-                        initialNumToRender={5}
-                        maxToRenderPerBatch={5}
-                        onEndReached={loadMoreComments}
-                        onEndReachedThreshold={0.2}
-                    />
+                    <SafeView>
+                        <FlatList
+                            data={comments}
+                            renderItem={renderComment}
+                            keyExtractor={(item) => item.id.toString()}
+                            initialNumToRender={5}
+                            maxToRenderPerBatch={5}
+                            onEndReached={loadMoreComments}
+                            onEndReachedThreshold={0.2}
+                        />
+                    </SafeView>
                 ) : (
                     <View style={{ marginVertical: '40%' }}>
                         <ActivityIndicator />

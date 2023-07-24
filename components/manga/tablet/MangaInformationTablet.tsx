@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { View, Text, TouchableOpacity, ActivityIndicator } from 'react-native';
 import { ITitle } from '../../../types/ITitle';
 import { ITeams } from '../../../types/ITeams';
@@ -17,6 +17,15 @@ type Props = {
 };
 
 const MangaInformationTablet: React.FC<Props> = ({ details, genres, teams }) => {
+    const [stats, setStats] = useState<any>(null);
+    useEffect(() => {
+        fetch(details.href).then((res: any) => {
+            res.text().then((res: any) => {
+                setStats(res);
+            });
+        });
+    }, []);
+
     return (
         <View>
             <View style={{ marginTop: 12 }}>
@@ -60,11 +69,11 @@ const MangaInformationTablet: React.FC<Props> = ({ details, genres, teams }) => 
                     </View>
                 </>
             ) : null}
-            <Related isTablet={isTablet} url={details.href} />
-            <Similar isTablet={isTablet} url={details.href} />
+            <Related isTablet={isTablet()} url={details.href} />
+            <Similar isTablet={isTablet()} url={details.href} />
             <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'flex-start' }}>
-                <Listed isTablet={isTablet} url={details.href} />
-                <Rated isTablet={isTablet} url={details.href} rate={details.rate_avg} />
+                <Listed isTablet={isTablet()} stats={stats} />
+                <Rated isTablet={isTablet()} stats={stats} rate={details.rate_avg} />
             </View>
         </View>
     );

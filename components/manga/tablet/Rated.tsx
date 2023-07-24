@@ -3,56 +3,55 @@ import { View, Text, Image } from 'react-native';
 import cheerio from 'cheerio';
 
 type Props = {
-    url: string;
+    stats: any;
     isTablet: Boolean;
     rate: string;
 };
 
-const Rated: React.FC<Props> = ({ url, isTablet, rate }) => {
+const Rated: React.FC<Props> = ({ stats, isTablet, rate }) => {
     const [listed, setListed] = useState<Object[] | null>(null);
     const [overall, setOverall] = useState<number>(0);
     useEffect(() => {
-        fetch(url).then((res) => {
-            res.text().then((res) => {
-                const $ = cheerio.load(res);
+        if (stats == null) {
+            return;
+        }
+        const $ = cheerio.load(stats);
 
-                const items: any = $('.media-stats-item');
+        const items: any = $('.media-stats-item');
 
-                let data: any = {};
-                items.each((index: number, element: any) => {
-                    const listedKey: any = $(element).find('.media-stats-item__title').text().trim();
-                    const rawValue: any = $(element).find('.media-stats-item__count').text().trim();
-                    const value = parseInt(rawValue);
+        let data: any = {};
+        items.each((index: number, element: any) => {
+            const listedKey: any = $(element).find('.media-stats-item__title').text().trim();
+            const rawValue: any = $(element).find('.media-stats-item__count').text().trim();
+            const value = parseInt(rawValue);
 
-                    data[index] = { listedKey, value };
-                });
+            data[index] = { listedKey, value };
+        });
 
-                let firstObject: any = {};
-                let secondObject: any = {};
-                let foundKey = false;
-                let sum = 0;
+        let firstObject: any = {};
+        let secondObject: any = {};
+        let foundKey = false;
+        let sum = 0;
 
-                for (const key in data) {
-                    if (data.hasOwnProperty(key)) {
-                        const element = data[key];
-                        if (element.listedKey === '10') {
-                            foundKey = true;
-                        }
-
-                        if (foundKey) {
-                            firstObject[key] = element;
-                            sum += element.value;
-                        } else {
-                            secondObject[key] = element;
-                        }
-                    }
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const element = data[key];
+                if (element.listedKey === '10') {
+                    foundKey = true;
                 }
 
-                setListed(Object.keys(firstObject).map((key) => firstObject[key]));
-                setOverall(sum);
-            });
-        });
-    }, []);
+                if (foundKey) {
+                    firstObject[key] = element;
+                    sum += element.value;
+                } else {
+                    secondObject[key] = element;
+                }
+            }
+        }
+
+        setListed(Object.keys(firstObject).map((key) => firstObject[key]));
+        setOverall(sum);
+    }, [stats]);
     return (
         <View style={{ marginVertical: 18 }}>
             {overall != 0 ? (
