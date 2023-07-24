@@ -55,7 +55,7 @@ const MangaChaptersTablet: React.FC<Props> = ({ mangaLink, details }) => {
                         chapterInfo: `Том ${item.chapter_volume} Глава ${item.chapter_number}`,
                     });
                 } catch (error) {
-                    Alert.alert('Ошибка', `Похоже страница не существует. (Невозможно получить данные)`, [
+                    Alert.alert('Ошибка', `Похоже страница не существует.\nСкорее всего причиной служит возрастное ограничение`, [
                         {
                             text: 'Понятно',
                         },

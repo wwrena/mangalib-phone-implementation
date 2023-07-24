@@ -27,7 +27,7 @@ const CommentTablet: React.FC<Props> = ({ comment }) => {
                 <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between' }}>
                     <TouchableOpacity
                         onPress={() => {
-                            navigation.navigate('Profile', { userData: comment.user });
+                            navigation.navigate('TabletProfile', { userData: comment.user });
                         }}
                     >
                         <View style={{ display: 'flex', flexDirection: 'row' }}>
