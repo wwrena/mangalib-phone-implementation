@@ -77,7 +77,7 @@ const Related: React.FC<Props> = ({ url, isTablet }): any => {
     if (pending == true) {
         return (
             <View>
-                <Heading>Похожее</Heading>
+                <Heading>Связанное</Heading>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
                         <View

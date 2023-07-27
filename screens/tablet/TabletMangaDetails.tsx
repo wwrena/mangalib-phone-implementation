@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Text, ScrollView, View, TouchableOpacity, ImageBackground, Touchable, Alert, Image } from 'react-native';
 import { ITitle } from '../../types/ITitle';
 import ContentSwitcher from '../../components/childs/ContentSwitcher';
@@ -14,6 +14,7 @@ import MangaChaptersTablet from '../../components/manga/tablet/MangaChaptersTabl
 import CommentsTablet from '../../components/manga/tablet/comments/CommentsTablet';
 import { useNavigation } from '@react-navigation/native';
 import { isTablet } from '../../other/constants';
+import Back from '../../components/Back';
 
 type Props = {
     route: any;
@@ -145,6 +146,7 @@ const TabletMangaDetails: React.FC<Props> = ({ route }) => {
 
     return (
         <ScrollView style={{ backgroundColor: '#111', flex: 1 }}>
+            <Back />
             {details.background ? (
                 <ImageBackground
                     source={{ uri: `https://cover.imglib.info/uploads/cover/${details.slug}/background/${details.background}` }}

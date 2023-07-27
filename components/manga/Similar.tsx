@@ -80,7 +80,7 @@ const Similar: React.FC<Props> = ({ url, isTablet }): any => {
     if (pending == true) {
         return (
             <View>
-                <Heading>Связанное</Heading>
+                <Heading>Похожее</Heading>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                     <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
                         <View
@@ -191,6 +191,8 @@ const Similar: React.FC<Props> = ({ url, isTablet }): any => {
                 </ScrollView>
             </View>
         );
+    } else if (data.length == 0 && pending == false) {
+        return null;
     }
 
     if (data.length != 0) {

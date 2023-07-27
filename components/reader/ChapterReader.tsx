@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, Text, SafeAreaView, Image, View, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { Text, SafeAreaView, TouchableOpacity, Dimensions, FlatList } from 'react-native';
 import { IChapterImage } from '../../types/IChapterImage';
 import { ITitle } from '../../types/ITitle';
 import SafeView from '../childs/SafeView';
@@ -37,10 +37,26 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
 
     const scrollHandler = (event: any) => {
         const contentOffsetY = event.nativeEvent.contentOffset.y;
-        const index = Math.round((contentOffsetY / Dimensions.get('window').height) * 1.5);
+        const index = Math.round(contentOffsetY / Dimensions.get('window').height);
         if (index >= 0) {
             setScrollIndex(index + 1);
         }
+    };
+
+    const renderItem: React.FC<{ item: any }> = ({ item }) => {
+        return (
+            <AutoHeightImage
+                style={{ alignSelf: 'center', marginBottom: 2 }}
+                width={deviceWidth()}
+                onLoad={() => {
+                    if (counterShouldDisplay == false) setCounterShouldDisplay(true);
+                }}
+                onError={(error) => {
+                    console.warn(`Failed to load ${serverLink + item.u}. Reason: ${error}`);
+                }}
+                source={{ uri: serverLink + item.u }}
+            />
+        );
     };
 
     return (
@@ -59,27 +75,15 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
                     <Text style={{ color: '#aaa' }}>{chapterInfo}</Text>
                 </SafeView>
             </TouchableOpacity>
-            <ScrollView style={{ backgroundColor: '#111' }} ref={scrollViewRef} onScroll={scrollHandler} scrollEventThrottle={100}>
-                <View style={{ display: 'flex', alignItems: 'center' }}>
-                    {images
-                        ? images.map((image: IChapterImage, index: number) => {
-                              return (
-                                  <AutoHeightImage
-                                      key={index}
-                                      width={deviceWidth()}
-                                      onLoad={() => {
-                                          if (counterShouldDisplay == false) setCounterShouldDisplay(true);
-                                      }}
-                                      onError={(error) => {
-                                          console.warn(`Failed to load ${serverLink + image.u}. Reason: ${error}`);
-                                      }}
-                                      source={{ uri: serverLink + image.u }}
-                                  />
-                              );
-                          })
-                        : null}
-                </View>
-            </ScrollView>
+            <FlatList
+                onScroll={scrollHandler}
+                scrollEventThrottle={100}
+                ref={scrollViewRef}
+                style={{ width: '100%' }}
+                data={images}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.p.toString()}
+            />
         </SafeAreaView>
     );
 };
