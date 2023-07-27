@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, FlatList, Text, View } from 'react-native';
+import { ActivityIndicator, Dimensions, FlatList, Text, View } from 'react-native';
 import { IComment } from '../../../types/IComment';
 import SafeView from '../../childs/SafeView';
 import Comment from './Comment';
@@ -42,24 +42,28 @@ const Comments: React.FC<Props> = ({ id }) => {
     };
 
     return (
-        <SafeView style={{ paddingBottom: 80 }}>
-            {comments ? (
-                <FlatList
-                    data={comments}
-                    renderItem={renderComment}
-                    keyExtractor={(item) => item.id.toString()}
-                    initialNumToRender={5}
-                    maxToRenderPerBatch={5}
-                    onEndReached={loadMoreComments}
-                    onEndReachedThreshold={0.2}
-                />
-            ) : (
-                <View style={{ marginVertical: '40%' }}>
-                    <ActivityIndicator />
-                    <Text style={{ color: '#ddd', fontWeight: '500', textAlign: 'center', marginTop: 16 }}>Загружаем комментарии...</Text>
-                </View>
-            )}
-        </SafeView>
+        <View style={{ display: 'flex', alignItems: 'center' }}>
+            <SafeView style={{ paddingBottom: 80, maxWidth: 960, width: '100%' }}>
+                {comments ? (
+                    <SafeView>
+                        <FlatList
+                            data={comments}
+                            renderItem={renderComment}
+                            keyExtractor={(item) => item.id.toString()}
+                            initialNumToRender={5}
+                            maxToRenderPerBatch={5}
+                            onEndReached={loadMoreComments}
+                            onEndReachedThreshold={0.2}
+                        />
+                    </SafeView>
+                ) : (
+                    <View style={{ marginVertical: '40%' }}>
+                        <ActivityIndicator />
+                        <Text style={{ color: '#ddd', fontWeight: '500', textAlign: 'center', marginTop: 16 }}>Загружаем комментарии...</Text>
+                    </View>
+                )}
+            </SafeView>
+        </View>
     );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ScrollView, Text, SafeAreaView, Image, View, TouchableOpacity, Dimensions, FlatList } from 'react-native';
+import { Text, SafeAreaView, TouchableOpacity, Dimensions, FlatList } from 'react-native';
 import { IChapterImage } from '../../types/IChapterImage';
 import { ITitle } from '../../types/ITitle';
 import SafeView from '../childs/SafeView';
@@ -17,7 +17,13 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
     const images: IChapterImage[] = props.images;
     const serverLink: string = props.serverLink;
     const chapterInfo: string = props.chapterInfo;
-    const deviceWidth = Dimensions.get('window').width;
+    const deviceWidth = () => {
+        const width = Dimensions.get('window').width;
+        if (width > 960) {
+            return 680;
+        }
+        return width;
+    };
     const navigation: any = useNavigation();
 
     const scrollViewRef = useRef(null);
@@ -31,10 +37,26 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
 
     const scrollHandler = (event: any) => {
         const contentOffsetY = event.nativeEvent.contentOffset.y;
-        const index = Math.round((contentOffsetY / Dimensions.get('window').height) * 1.5);
+        const index = Math.round(contentOffsetY / Dimensions.get('window').height);
         if (index >= 0) {
             setScrollIndex(index + 1);
         }
+    };
+
+    const renderItem: React.FC<{ item: any }> = ({ item }) => {
+        return (
+            <AutoHeightImage
+                style={{ alignSelf: 'center', marginBottom: 2 }}
+                width={deviceWidth()}
+                onLoad={() => {
+                    if (counterShouldDisplay == false) setCounterShouldDisplay(true);
+                }}
+                onError={(error) => {
+                    console.warn(`Failed to load ${serverLink + item.u}. Reason: ${error}`);
+                }}
+                source={{ uri: serverLink + item.u }}
+            />
+        );
     };
 
     return (
@@ -53,25 +75,15 @@ const ChapterReader: React.FC<Props> = ({ route }) => {
                     <Text style={{ color: '#aaa' }}>{chapterInfo}</Text>
                 </SafeView>
             </TouchableOpacity>
-            <ScrollView style={{ backgroundColor: '#111' }} ref={scrollViewRef} onScroll={scrollHandler} scrollEventThrottle={100}>
-                {images
-                    ? images.map((image: IChapterImage, index: number) => {
-                          return (
-                              <AutoHeightImage
-                                  key={index}
-                                  width={deviceWidth}
-                                  onLoad={() => {
-                                      if (counterShouldDisplay == false) setCounterShouldDisplay(true);
-                                  }}
-                                  onError={() => {
-                                      console.warn(`Failed to load ${serverLink + image.u}`);
-                                  }}
-                                  source={{ uri: serverLink + image.u }}
-                              />
-                          );
-                      })
-                    : null}
-            </ScrollView>
+            <FlatList
+                onScroll={scrollHandler}
+                scrollEventThrottle={100}
+                ref={scrollViewRef}
+                style={{ width: '100%' }}
+                data={images}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.p.toString()}
+            />
         </SafeAreaView>
     );
 };

@@ -7,11 +7,15 @@ import SafeView from '../childs/SafeView';
 
 type Props = {
     url: any;
+    isTablet: boolean;
 };
 
-const Similar: React.FC<Props> = ({ url }): any => {
+const Similar: React.FC<Props> = ({ url, isTablet }): any => {
     const [data, setData] = useState<any>([]);
+    const [pending, setPending] = useState<Boolean>(false);
+
     useEffect(() => {
+        setPending(true);
         fetch(url).then((res) => {
             res.text().then((res) => {
                 const $ = cheerio.load(res);
@@ -60,6 +64,7 @@ const Similar: React.FC<Props> = ({ url }): any => {
                                         },
                                     ]);
                                 }
+                                setPending(false);
                             });
                         } catch (error) {
                             console.error(error);
@@ -71,40 +76,157 @@ const Similar: React.FC<Props> = ({ url }): any => {
             });
         });
     }, []);
+
+    if (pending == true) {
+        return (
+            <View>
+                <Heading>Похожее</Heading>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
+                        <View
+                            style={{
+                                width: 310,
+                                backgroundColor: 'rgb(37,37,39)',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                overflow: 'hidden',
+                                borderRadius: 6,
+                            }}
+                        >
+                            <View style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
+                            <View
+                                style={{
+                                    paddingVertical: 7,
+                                    paddingHorizontal: 12,
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <View>
+                                    <View style={{ backgroundColor: '#363636', width: 200, marginBottom: 6, height: 12, borderRadius: 4 }}></View>
+                                    <View style={{ width: 200, backgroundColor: '#363636', height: 14, borderRadius: 4 }}></View>
+                                </View>
+                                <View style={{ backgroundColor: '#363636', width: 50, height: 13, borderRadius: 4 }}></View>
+                            </View>
+                        </View>
+                        <View
+                            style={{
+                                width: 310,
+                                backgroundColor: 'rgb(37,37,39)',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                overflow: 'hidden',
+                                borderRadius: 6,
+                            }}
+                        >
+                            <View style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
+                            <View
+                                style={{
+                                    paddingVertical: 7,
+                                    paddingHorizontal: 12,
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <View>
+                                    <View style={{ backgroundColor: '#363636', width: 200, marginBottom: 6, height: 12, borderRadius: 4 }}></View>
+                                    <View style={{ width: 200, backgroundColor: '#363636', height: 14, borderRadius: 4 }}></View>
+                                </View>
+                                <View style={{ backgroundColor: '#363636', width: 50, height: 13, borderRadius: 4 }}></View>
+                            </View>
+                        </View>
+                        <View
+                            style={{
+                                width: 310,
+                                backgroundColor: 'rgb(37,37,39)',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                overflow: 'hidden',
+                                borderRadius: 6,
+                            }}
+                        >
+                            <View style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
+                            <View
+                                style={{
+                                    paddingVertical: 7,
+                                    paddingHorizontal: 12,
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <View>
+                                    <View style={{ backgroundColor: '#363636', width: 200, marginBottom: 6, height: 12, borderRadius: 4 }}></View>
+                                    <View style={{ width: 200, backgroundColor: '#363636', height: 14, borderRadius: 4 }}></View>
+                                </View>
+                                <View style={{ backgroundColor: '#363636', width: 50, height: 13, borderRadius: 4 }}></View>
+                            </View>
+                        </View>
+                        <View
+                            style={{
+                                width: 310,
+                                backgroundColor: 'rgb(37,37,39)',
+                                display: 'flex',
+                                flexDirection: 'row',
+                                overflow: 'hidden',
+                                borderRadius: 6,
+                            }}
+                        >
+                            <View style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
+                            <View
+                                style={{
+                                    paddingVertical: 7,
+                                    paddingHorizontal: 12,
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                }}
+                            >
+                                <View>
+                                    <View style={{ backgroundColor: '#363636', width: 200, marginBottom: 6, height: 12, borderRadius: 4 }}></View>
+                                    <View style={{ width: 200, backgroundColor: '#363636', height: 14, borderRadius: 4 }}></View>
+                                </View>
+                                <View style={{ backgroundColor: '#363636', width: 50, height: 13, borderRadius: 4 }}></View>
+                            </View>
+                        </View>
+                    </View>
+                </ScrollView>
+            </View>
+        );
+    } else if (data.length == 0 && pending == false) {
+        return null;
+    }
+
     if (data.length != 0) {
         return (
             <View>
-                <Separator />
-                <SafeView>
-                    <Heading>Похожее</Heading>
-                    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                        <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
-                            {data.map((item: any, index: number) => {
-                                return (
-                                    <View
-                                        key={index}
-                                        style={{
-                                            width: 310,
-                                            backgroundColor: 'rgb(37,37,39)',
-                                            display: 'flex',
-                                            flexDirection: 'row',
-                                            overflow: 'hidden',
-                                            borderRadius: 6,
-                                        }}
-                                    >
-                                        <Image source={{ uri: `${item.cover}` }} style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
-                                        <View style={{ paddingVertical: 7, paddingHorizontal: 12, display: 'flex', justifyContent: 'space-between' }}>
-                                            <View>
-                                                <Text style={{ color: '#1484FF', fontSize: 12, marginBottom: 3 }}>{item.type}</Text>
-                                                <Text style={{ color: '#ddd', fontWeight: '600', width: 210 }}>{item.name}</Text>
-                                            </View>
+                {isTablet == false ? <Separator /> : null}
+                <Heading>Похожее</Heading>
+                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <View style={{ display: 'flex', flexDirection: 'row', gap: 12 }}>
+                        {data.map((item: any, index: number) => {
+                            return (
+                                <View
+                                    key={index}
+                                    style={{
+                                        width: 310,
+                                        backgroundColor: 'rgb(37,37,39)',
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        overflow: 'hidden',
+                                        borderRadius: 6,
+                                    }}
+                                >
+                                    <Image source={{ uri: `${item.cover}` }} style={{ height: 110, width: 85, backgroundColor: '#363636' }} />
+                                    <View style={{ paddingVertical: 7, paddingHorizontal: 12, display: 'flex', justifyContent: 'space-between' }}>
+                                        <View>
+                                            <Text style={{ color: '#1484FF', fontSize: 12, marginBottom: 3 }}>{item.type}</Text>
+                                            <Text style={{ color: '#ddd', fontWeight: '600', width: 210 }}>{item.name}</Text>
                                         </View>
                                     </View>
-                                );
-                            })}
-                        </View>
-                    </ScrollView>
-                </SafeView>
+                                </View>
+                            );
+                        })}
+                    </View>
+                </ScrollView>
             </View>
         );
     }

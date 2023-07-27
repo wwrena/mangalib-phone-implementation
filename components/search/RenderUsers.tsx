@@ -16,7 +16,7 @@ const RenderUsers: React.FC<Props> = ({ result }) => {
                 {result
                     ? result.map((item: any, index: number) => {
                           return (
-                              <TouchableOpacity key={index} onPress={() => navigation.navigate('Profile', { userData: item })}>
+                              <TouchableOpacity key={index} onPress={() => navigation.navigate('TabletProfile', { userData: item })}>
                                   <View style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: 6 }}>
                                       {item.avatar != '0' ? (
                                           <Image

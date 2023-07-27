@@ -12,6 +12,7 @@ import Related from './Related';
 import Heading from '../Text/Heading';
 import TeamCard from './TeamCard';
 import Similar from './Similar';
+import { isTablet } from '../../other/constants';
 
 type Props = {
     details: ITitle;
@@ -74,7 +75,7 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                         ) : (
                             <View style={{ width: '100%', display: 'flex', alignItems: 'center', height: '60%', marginVertical: '20%' }}>
                                 <ActivityIndicator />
-                                <Text style={{ color: '#ddd', fontWeight: '500', marginTop: 12 }}>Загружаем жанры...</Text>
+                                <Text style={{ color: '#ddd', fontWeight: '500', marginTop: 12 }}>Загружаем информацию...</Text>
                             </View>
                         )}
                     </View>
@@ -90,8 +91,10 @@ const MangaInformation: React.FC<Props> = ({ details, slowDetails, genres, teams
                     ) : null}
                 </View>
             </SafeView>
-            <Related url={details.href} />
-            <Similar url={details.href} />
+            <SafeView>
+                <Related isTablet={isTablet()} url={details.href} />
+                <Similar isTablet={isTablet()} url={details.href} />
+            </SafeView>
         </View>
     );
 };

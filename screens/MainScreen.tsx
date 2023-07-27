@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, TextInput, View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator } from 'react-native';
+import { SafeAreaView, TextInput, View, Text, Image, ScrollView, TouchableOpacity, ActivityIndicator, Platform } from 'react-native';
 import { AppTheme } from '../styles/AppTheme';
 import { ITitle } from '../types/ITitle';
 import { ListView } from '../styles/ListView';
@@ -7,6 +7,7 @@ import { useNavigation } from '@react-navigation/native';
 import SearchSwitcher from '../components/search/SearchSwitcher';
 import RenderUsers from '../components/search/RenderUsers';
 import SafeView from '../components/childs/SafeView';
+import { isTablet } from '../other/constants';
 
 export const MainScreen: React.FC = () => {
     const navigation: any = useNavigation();
@@ -48,6 +49,10 @@ export const MainScreen: React.FC = () => {
     }, [search, searchType]);
 
     const handleClick = (item: any) => {
+        if (isTablet()) {
+            navigation.navigate('MangaDetailsTablet', { details: item });
+            return;
+        }
         navigation.navigate('MangaDetails', {
             details: item,
         });
