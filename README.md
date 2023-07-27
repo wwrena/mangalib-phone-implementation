@@ -4,8 +4,8 @@ Implemented things:
 
 -   Searching for manga, users (from MangaLib)
 -   Viewing basic information such as name, chapter count, who translated
--   Reading chapters (performance is poor)
--   Alert when no images was found on chapter
+-   Reading chapters (with decent performance now?)
+-   Alert if chapter (mostly manga) can't be read
 -   Display current page user is viewing on reader
 -   Display when chapter was posted
 -   Reversing chapter list (ascending, descending)
